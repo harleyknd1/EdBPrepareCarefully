@@ -107,19 +107,11 @@ namespace EdB.PrepareCarefully {
             //PrepareRelatedPawns();
             PrepareColonists();
             //PrepareWorldPawns();
-            PrepareScenario();
+            //PrepareScenario();
         }
 
         // Replace the originally selected scenario with one that reflects the equipment and pawns chosen in Prepare Carefully.
         protected void PrepareScenario() {
-
-            //Set the thing defs so the pawns actually spawn.
-            Dictionary<Pawn, List<ThingDefCount>> posessions = new Dictionary<Pawn, List<ThingDefCount>>();
-            foreach (var item in Find.GameInitData.startingAndOptionalPawns) {
-                posessions.Add(item, new List<ThingDefCount>());
-            }
-            Find.GameInitData.startingPossessions = posessions;
-
             // We're going to create two copies of the original scenario.  The first one is the one that we'll actually use to spawn the new game.
             // This one is potentially going to include custom scenario parts that are specific to Prepare Carefully.  Once we've spawned the game,
             // we don't want to leave that scenario associated with the save, because we don't want the save to be dependent on Prepare Carefully.
@@ -156,23 +148,20 @@ namespace EdB.PrepareCarefully {
                         customPawn.Pawn.workSettings = new Pawn_WorkSettings(customPawn.Pawn);
                     }
                     customPawn.Pawn.workSettings.EnableAndInitialize();
-                    //customPawn.Pawn.InitializeComps();
+                    colonists.Add(customPawn.Pawn);
                 }
-                colonists.Add(customPawn.Pawn);
             }
 
-            foreach(var pawn in Find.GameInitData.startingAndOptionalPawns) {
-                if(pawn.workSettings == null) {
-                    pawn.workSettings = new Pawn_WorkSettings(pawn);
-                }
-                pawn.workSettings.EnableAndInitializeIfNotAlreadyInitialized();
+            //Set the thing defs so the pawns actually spawn.
+            Dictionary<Pawn, List<ThingDefCount>> posessions = new Dictionary<Pawn, List<ThingDefCount>>();
+            foreach (var item in colonists) {
+                posessions.Add(item, new List<ThingDefCount>());
             }
-            
-
-
+            Find.GameInitData.startingPossessions = posessions;
+            Find.GameInitData.startingPawnCount = colonists.Count;
             Find.GameInitData.startingAndOptionalPawns = colonists;
-            Find.GameInitData.startingPawnCount = colonists.Count();
         }
+
 
         protected void PrepareWorldPawns() {
             foreach (var customPawn in state.Pawns) {
