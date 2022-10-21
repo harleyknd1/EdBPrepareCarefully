@@ -39,10 +39,10 @@ namespace EdB.PrepareCarefully {
         protected string apparelConflictText = null;
         protected List<ApparelConflict> apparelConflicts = new List<ApparelConflict>();
 
-        // Keep track of the most recently selected adulthood option so that if the user updates the pawn's
-        // age in a way that switches them back and forth from adult to child (which nulls out the adulthood
+        // Keep track of the most recently selected Adulthood option so that if the user updates the pawn's
+        // age in a way that switches them back and forth from adult to child (which nulls out the Adulthood
         // value in the Pawn), we can remember what the value was and restore it.
-        protected Backstory lastSelectedAdulthoodBackstory = null;
+        protected BackstoryDef lastSelectedAdulthoodBackstoryDef = null;
 
         // A GUID provides a unique identifier for the CustomPawn.
         protected string id;
@@ -162,10 +162,10 @@ namespace EdB.PrepareCarefully {
 
         public Color HairColor {
             get {
-                return pawn.story.hairColor;
+                return pawn.story.HairColor;
             }
             set {
-                pawn.story.hairColor = value;
+                pawn.story.HairColor = value;
                 MarkPortraitAsDirty();
             }
         }
@@ -293,8 +293,8 @@ namespace EdB.PrepareCarefully {
             ResetCachedIncapableOf();
             ResetCachedHead();
 
-            // Copy the adulthood backstory or set a random one if it's null.
-            this.LastSelectedAdulthoodBackstory = pawn.story.adulthood;
+            // Copy the Adulthood BackstoryDef or set a random one if it's null.
+            this.LastSelectedAdulthoodBackstoryDef = pawn.story.Adulthood;
 
             // Evaluate all hediffs.
             InitializeInjuriesAndImplantsFromPawn(pawn);
@@ -428,18 +428,18 @@ namespace EdB.PrepareCarefully {
             }
         }
 
-        public Backstory LastSelectedAdulthoodBackstory {
+        public BackstoryDef LastSelectedAdulthoodBackstoryDef {
             get {
-                if (lastSelectedAdulthoodBackstory != null) {
-                    return lastSelectedAdulthoodBackstory;
+                if (lastSelectedAdulthoodBackstoryDef != null) {
+                    return lastSelectedAdulthoodBackstoryDef;
                 }
                 else {
-                    lastSelectedAdulthoodBackstory = Randomizer.RandomAdulthood(this);
-                    return lastSelectedAdulthoodBackstory;
+                    lastSelectedAdulthoodBackstoryDef = Randomizer.RandomAdulthood(this);
+                    return lastSelectedAdulthoodBackstoryDef;
                 }
             }
             set {
-                lastSelectedAdulthoodBackstory = value;
+                lastSelectedAdulthoodBackstoryDef = value;
             }
         }
 
@@ -449,15 +449,15 @@ namespace EdB.PrepareCarefully {
 
         public void CopyAppearance(Pawn pawn) {
             this.HairDef = pawn.story.hairDef;
-            this.pawn.story.hairColor = pawn.story.hairColor;
+            this.pawn.story.HairColor = pawn.story.HairColor;
             this.pawn.story.bodyType = pawn.story.bodyType;
             if (pawn.style != null && this.Pawn.style != null) {
                 this.Beard = pawn.style.beardDef;
                 this.FaceTattoo = pawn.style.FaceTattoo;
                 this.BodyTattoo = pawn.style.BodyTattoo;
             }
-            this.HeadGraphicPath = pawn.story.HeadGraphicPath;
-            this.MelaninLevel = pawn.story.melanin;
+            this.HeadGraphicPath = pawn.story.headType.graphicPath;
+            this.MelaninLevel = pawn.story.GetPrivateField<float>("melanin");
             this.Pawn.apparel.DestroyAll();
             foreach (var layer in PrepareCarefully.Instance.Providers.PawnLayers.GetLayersForPawn(this)) {
                 if (layer.Apparel) {
@@ -493,7 +493,7 @@ namespace EdB.PrepareCarefully {
             CopySkillsAndPassionsToPawn();
         }
 
-        public void UpdateSkillLevelsForNewBackstoryOrTrait() {
+        public void UpdateSkillLevelsForNewBackstoryDefOrTrait() {
             ComputeSkillLevelModifiers();
             ResetCachedIncapableOf();
             ClearPawnCaches();
@@ -510,14 +510,14 @@ namespace EdB.PrepareCarefully {
 
         protected int ComputeSkillModifier(SkillDef def) {
             int value = 0;
-            if (pawn.story != null && pawn.story.childhood != null && pawn.story.childhood.skillGainsResolved != null) {
-                if (pawn.story.childhood.skillGainsResolved.ContainsKey(def)) {
-                    value += pawn.story.childhood.skillGainsResolved[def];
+            if (pawn.story != null && pawn.story.Childhood != null && pawn.story.Childhood.skillGains != null) {
+                if (pawn.story.Childhood.skillGains.ContainsKey(def)) {
+                    value += pawn.story.Childhood.skillGains[def];
                 }
             }
-            if (pawn.story != null && pawn.story.adulthood != null && pawn.story.adulthood.skillGainsResolved != null) {
-                if (pawn.story.adulthood.skillGainsResolved.ContainsKey(def)) {
-                    value += pawn.story.adulthood.skillGainsResolved[def];
+            if (pawn.story != null && pawn.story.Adulthood != null && pawn.story.Adulthood.skillGains != null) {
+                if (pawn.story.Adulthood.skillGains.ContainsKey(def)) {
+                    value += pawn.story.Adulthood.skillGains[def];
                 }
             }
             foreach (Trait trait in this.Pawn.story.traits.allTraits) {
@@ -749,10 +749,10 @@ namespace EdB.PrepareCarefully {
         public string Label {
             get {
                 NameTriple name = pawn.Name as NameTriple;
-                if (pawn.story.adulthood == null) {
+                if (pawn.story.Adulthood == null) {
                     return name.Nick;
                 }
-                return name.Nick + ", " + pawn.story.adulthood.TitleShortFor(Gender);
+                return name.Nick + ", " + pawn.story.Adulthood.TitleShortFor(Gender);
             }
         }
 
@@ -985,10 +985,10 @@ namespace EdB.PrepareCarefully {
         public string ProfessionLabelShort {
             get {
                 if (IsAdult) {
-                    return Adulthood.TitleShortCapFor(Gender);
+                    return Adulthood.TitleShortFor(Gender);
                 }
                 else {
-                    return Childhood.TitleShortCapFor(Gender);
+                    return Childhood.TitleShortFor(Gender);
                 }
             }
         }
@@ -1109,42 +1109,42 @@ namespace EdB.PrepareCarefully {
             }
         }
 
-        public Backstory Childhood {
+        public BackstoryDef Childhood {
             get {
-                return pawn.story.childhood;
+                return pawn.story.Childhood;
             }
             set {
-                pawn.story.childhood = value;
+                pawn.story.Childhood = value;
                 ResetBackstories();
             }
         }
 
-        public Backstory Adulthood {
+        public BackstoryDef Adulthood {
             get {
-                return pawn.story.adulthood;
+                return pawn.story.Adulthood;
             }
             set {
                 if (value != null) {
-                    LastSelectedAdulthoodBackstory = value;
+                    LastSelectedAdulthoodBackstoryDef = value;
                 }
                 if (IsAdult) {
-                    pawn.story.adulthood = value;
+                    pawn.story.Adulthood = value;
                 }
                 else {
-                    pawn.story.adulthood = null;
+                    pawn.story.Adulthood = null;
                 }
                 ResetBackstories();
             }
         }
 
-        public bool HasAdulthoodBackstory {
+        public bool HasAdulthoodBackstoryDef {
             get {
                 return Adulthood != null;
             }
         }
 
         public void ResetBackstories() {
-            UpdateSkillLevelsForNewBackstoryOrTrait();
+            UpdateSkillLevelsForNewBackstoryDefOrTrait();
         }
 
         public CustomHeadType HeadType {
@@ -1154,7 +1154,7 @@ namespace EdB.PrepareCarefully {
             set {
                 this.headType = value;
                 //Logger.Debug("Setting pawn headType to " + value);
-                this.pawn.story.crownType = value.CrownType != CrownType.Undefined ? value.CrownType : CrownType.Average;
+                //this.pawn.story.CrownType = value.CrownType != CrownType.Undefined ? value.CrownType : CrownType.Average;
                 ThingComp alienComp = ProviderAlienRaces.FindAlienCompForPawn(pawn);
                 if (alienComp != null) {
                     ReflectionUtil.GetPublicField(alienComp, "crownType").SetValue(alienComp, headType.AlienCrownType);
@@ -1166,7 +1166,7 @@ namespace EdB.PrepareCarefully {
 
         public string HeadGraphicPath {
             get {
-                return pawn.story.HeadGraphicPath;
+                return pawn.story.headType.graphicPath;
             }
             set {
                 CustomHeadType headType = PrepareCarefully.Instance.Providers.HeadTypes.FindHeadType(pawn.def, value);
@@ -1183,8 +1183,9 @@ namespace EdB.PrepareCarefully {
 
         protected void SetHeadGraphicPathOnPawn(Pawn pawn, string value) {
             // Need to use reflection to set the private field.
-            typeof(Pawn_StoryTracker).GetField("headGraphicPath", BindingFlags.Instance | BindingFlags.NonPublic)
-                .SetValue(pawn.story, value);
+            pawn.story.headType.graphicPath = value;
+            /*typeof(Pawn_StoryTracker).GetField("headType.graphicPath", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(pawn.story, value);*/
         }
 
         protected string FilterHeadPathForGender(string path) {
@@ -1234,7 +1235,7 @@ namespace EdB.PrepareCarefully {
 
         protected void ResetTraits() {
             ApplyInjuriesAndImplantsToPawn();
-            UpdateSkillLevelsForNewBackstoryOrTrait();
+            UpdateSkillLevelsForNewBackstoryDefOrTrait();
         }
 
         public bool HasTrait(Trait trait) {
@@ -1328,10 +1329,10 @@ namespace EdB.PrepareCarefully {
 
         public float MelaninLevel {
             get {
-                return pawn.story.melanin;
+                return pawn.story.GetPrivateField<float>("melanin");
             }
             set {
-                pawn.story.melanin = value;
+                pawn.story.SetPrivateField("melanin",value);
                 if (alienRace != null) {
                     SkinColor = PawnSkinColors.GetSkinColor(value);
                 }
@@ -1370,12 +1371,12 @@ namespace EdB.PrepareCarefully {
                 long years = pawn.ageTracker.AgeBiologicalYears;
                 long diff = value - years;
                 pawn.ageTracker.AgeBiologicalTicks += diff * 3600000L;
-                if (IsAdult && pawn.story.adulthood == null) {
-                    pawn.story.adulthood = LastSelectedAdulthoodBackstory;
+                if (IsAdult && pawn.story.Adulthood == null) {
+                    pawn.story.Adulthood = LastSelectedAdulthoodBackstoryDef;
                     ResetBackstories();
                 }
-                else if (!IsAdult && pawn.story.adulthood != null) {
-                    pawn.story.adulthood = null;
+                else if (!IsAdult && pawn.story.Adulthood != null) {
+                    pawn.story.Adulthood = null;
                     ResetBackstories();
                 }
                 pawn.ClearCachedLifeStage();

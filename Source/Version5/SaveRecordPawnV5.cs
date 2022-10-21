@@ -70,12 +70,12 @@ namespace EdB.PrepareCarefully {
             this.pawnKindDef = pawn.OriginalKindDef?.defName ?? pawn.Pawn.kindDef.defName;
             this.originalFactionDef = pawn.OriginalFactionDef?.defName;
             this.gender = pawn.Gender;
-            this.adulthood = pawn.Adulthood?.identifier ?? pawn.LastSelectedAdulthoodBackstory?.identifier;
+            this.adulthood = pawn.Adulthood?.identifier ?? pawn.LastSelectedAdulthoodBackstoryDef?.identifier;
             this.childhood = pawn.Childhood?.identifier;
             this.skinColor = pawn.Pawn.story.SkinColor;
-            this.melanin = pawn.Pawn.story.melanin;
+            this.melanin = pawn.Pawn.story.GetPrivateField<float>("melanin");
             this.hairDef = pawn.HairDef.defName;
-            this.hairColor = pawn.Pawn.story.hairColor;
+            this.hairColor = pawn.Pawn.story.HairColor;
             this.headGraphicPath = pawn.HeadGraphicPath;
             this.bodyType = pawn.BodyType.defName;
             this.beard = pawn.Beard?.defName;

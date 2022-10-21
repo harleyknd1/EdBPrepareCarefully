@@ -9,21 +9,21 @@ using Verse.Sound;
 
 namespace EdB.PrepareCarefully {
     public class CustomHeadType {
-        private CrownType crownType;
+        //private CrownType crownType;
         private string graphicPath;
         private string alternateGraphicPath;
         public string AlienCrownType {
             get; set;
         }
         private Gender? gender;
-        public CrownType CrownType {
+        /*public CrownType CrownType {
             get {
                 return crownType;
             }
             set {
                 crownType = value;
             }
-        }
+        }*/
         public string GraphicPath {
             get {
                 return graphicPath;
@@ -67,7 +67,7 @@ namespace EdB.PrepareCarefully {
             }
         }
         public override string ToString() {
-            return "{ label = \"" + Label + "\", graphicsPath = \"" + graphicPath + "\", crownType = " + crownType + "\", AlienCrownType = " + AlienCrownType + ", gender = " + gender + "}";
+            return "{ label = \"" + Label + "\", graphicsPath = \"" + graphicPath + "\", AlienCrownType = " + AlienCrownType + ", gender = " + gender + "}";
         }
     }
 }

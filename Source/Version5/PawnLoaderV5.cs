@@ -318,7 +318,7 @@ namespace EdB.PrepareCarefully {
                 pawn.MelaninLevel = PawnColorUtils.FindMelaninValueFromColor(record.skinColor);
             }
 
-            Backstory backstory = FindBackstory(record.childhood);
+            BackstoryDef backstory = FindBackstory(record.childhood);
             if (backstory != null) {
                 pawn.Childhood = backstory;
             }
@@ -623,15 +623,15 @@ namespace EdB.PrepareCarefully {
             return null;
         }
 
-        private Backstory FindBackstory(string name) {
-            Backstory matchingBackstory = BackstoryDatabase.allBackstories.Values.ToList().Find((Backstory b) => {
+        private BackstoryDef FindBackstory(string name) {
+            BackstoryDef matchingBackstory = BackstoryDatabase.allBackstories.Values.ToList().Find((BackstoryDef b) => {
                 return b.identifier.Equals(name);
             });
             // If we couldn't find a matching backstory, look for one with the same identifier, but a different version number at the end.
             if (matchingBackstory == null) {
                 Regex expression = new Regex("\\d+$");
                 string backstoryMinusVersioning = expression.Replace(name, "");
-                matchingBackstory = BackstoryDatabase.allBackstories.Values.ToList().Find((Backstory b) => {
+                matchingBackstory = BackstoryDatabase.allBackstories.Values.ToList().Find((BackstoryDef b) => {
                     return b.identifier.StartsWith(backstoryMinusVersioning);
                 });
                 if (matchingBackstory != null) {

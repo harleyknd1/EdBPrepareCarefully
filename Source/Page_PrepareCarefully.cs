@@ -365,7 +365,7 @@ namespace EdB.PrepareCarefully {
             };
 
             tabViewPawns.PanelBackstory.BackstoryUpdated += pawnController.UpdateBackstory;
-            tabViewPawns.PanelBackstory.BackstoryUpdated += (BackstorySlot slot, Backstory backstory) => { pawnController.CheckPawnCapabilities(); };
+            tabViewPawns.PanelBackstory.BackstoryUpdated += (BackstorySlot slot, BackstoryDef backstory) => { pawnController.CheckPawnCapabilities(); };
             tabViewPawns.PanelBackstory.BackstoriesRandomized += pawnController.RandomizeBackstories;
             tabViewPawns.PanelBackstory.BackstoriesRandomized += () => { pawnController.CheckPawnCapabilities(); };
 

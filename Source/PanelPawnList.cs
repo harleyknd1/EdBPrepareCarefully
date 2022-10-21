@@ -268,11 +268,11 @@ namespace EdB.PrepareCarefully {
                     string description = null;
                     if (pawn.IsAdult) {
                         if (pawn.Adulthood != null) {
-                            description = pawn.Adulthood.TitleShortCapFor(pawn.Gender);
+                            description = pawn.Adulthood.TitleShortFor(pawn.Gender);
                         }
                     }
                     else {
-                        description = pawn.Childhood.TitleShortCapFor(pawn.Gender);
+                        description = pawn.Childhood.TitleShortFor(pawn.Gender);
                     }
                     if (!description.NullOrEmpty()) {
                         Widgets.Label(professionRect, descriptionTrimmer.TrimLabelIfNeeded(description));

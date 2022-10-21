@@ -40,9 +40,9 @@ namespace EdB.PrepareCarefully {
         public CustomHeadType FindHeadTypeForPawn(Pawn pawn) {
             var alienComp = ProviderAlienRaces.FindAlienCompForPawn(pawn);
             if (alienComp == null) {
-                var result = FindHeadTypeByGraphicsPath(pawn.story.HeadGraphicPath);
+                var result = FindHeadTypeByGraphicsPath(pawn.story.headType.graphicPath);
                 if (result == null) {
-                    Logger.Warning("Did not find head type for path: " + pawn.story.HeadGraphicPath);
+                    Logger.Warning("Did not find head type for path: " + pawn.story.headType.graphicPath);
                 }
                 return result;
             }

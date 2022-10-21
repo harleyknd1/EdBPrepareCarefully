@@ -101,6 +101,7 @@ namespace EdB.PrepareCarefully {
             NameSortOrder = SortOrder.Ascending;
             CostSortOrder = SortOrder.Ascending;
             SortField = SortField.Name;
+            BackstoryDatabase.ReloadAllBackstories();
         }
 
         // Performs the logic from the Page.DoNext() method in the base Page class instead of calling the override

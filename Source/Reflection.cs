@@ -30,9 +30,9 @@ namespace EdB.PrepareCarefully {
             }
         }
         public static class PawnSkinColors {
-            public static int GetSkinDataIndexOfMelanin(float value) {
+            /*public static int GetSkinDataIndexOfMelanin(float value) {
                 return (int)ReflectionCache.Instance.PawnSkinColors_GetSkinDataIndexOfMelanin.Invoke(null, new object[] { value });
-            }
+            }*/
         }
         public static class GraphicDatabaseHeadRecords {
             public static void BuildDatabaseIfNecessary() {

@@ -82,7 +82,7 @@ namespace EdB.PrepareCarefully {
         }
 
         // Backstory-related actions.
-        public void UpdateBackstory(BackstorySlot slot, Backstory backstory) {
+        public void UpdateBackstory(BackstorySlot slot, BackstoryDef backstory) {
             if (slot == BackstorySlot.Childhood) {
                 state.CurrentPawn.Childhood = backstory;
             }

@@ -141,7 +141,7 @@ namespace EdB.PrepareCarefully {
             return result;
         }
 
-        protected CrownType FindCrownTypeEnumValue(string crownType) {
+        /*protected CrownType FindCrownTypeEnumValue(string crownType) {
             if (crownType.Contains(CrownType.Average.ToString() + "_")) {
                 return CrownType.Average;
             }
@@ -151,7 +151,7 @@ namespace EdB.PrepareCarefully {
             else {
                 return CrownType.Undefined;
             }
-        }
+        }*/
 
         protected CustomHeadType CreateGenderedAlienHeadTypeFromCrownType(string graphicsPath, string crownType, Gender gender) {
             CustomHeadType result = new CustomHeadType();
@@ -188,7 +188,7 @@ namespace EdB.PrepareCarefully {
 
             result.GraphicPath = pathValue + genderPrefix + crownType;
             result.AlternateGraphicPath = pathValue + altGenderPrefix + genderPrefix + crownType;
-            result.CrownType = FindCrownTypeEnumValue(crownType);
+            //result.CrownType = FindCrownTypeEnumValue(crownType);
             result.AlienCrownType = crownType;
             return result;
         }
@@ -204,7 +204,7 @@ namespace EdB.PrepareCarefully {
             result.AlternateGraphicPath = null;
             result.Label = LabelFromCrownType(crownType);
             result.Gender = null;
-            result.CrownType = FindCrownTypeEnumValue(crownType);
+            //result.CrownType = FindCrownTypeEnumValue(crownType);
             result.AlienCrownType = crownType;
             return result;
         }
@@ -216,12 +216,12 @@ namespace EdB.PrepareCarefully {
             result.Label = LabelFromGraphicsPath(graphicPath);
             string[] strArray = Path.GetFileNameWithoutExtension(graphicPath).Split('_');
             try {
-                result.CrownType = (CrownType)ParseHelper.FromString(strArray[strArray.Length - 2], typeof(CrownType));
+                //result.CrownType = (CrownType)ParseHelper.FromString(strArray[strArray.Length - 2], typeof(CrownType));
                 result.Gender = (Gender)ParseHelper.FromString(strArray[strArray.Length - 3], typeof(Gender));
             }
             catch (Exception ex) {
                 Logger.Warning("Parse error with head graphic at " + graphicPath + ": " + ex.Message);
-                result.CrownType = CrownType.Undefined;
+                //result.CrownType = CrownType.Undefined;
                 result.Gender = Gender.None;
             }
             return result;

@@ -35,11 +35,11 @@ namespace EdB.PrepareCarefully {
             float f = 0.01f;
             int counter = 1;
             while (f < 1.0f) {
-                int result = Reflection.PawnSkinColors.GetSkinDataIndexOfMelanin(f);
+                /*int result = Reflection.PawnSkinColors.GetSkinDataIndexOfMelanin(f);
                 if (result != currentIndex) {
                     currentIndex = result;
                     values.Add(f);
-                }
+                }*/
                 counter++;
                 double d = (double)counter / 100.0;
                 f = (float)d;

@@ -1,3 +1,4 @@
+using EdB.PrepareCarefully.Reflection;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,16 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Verse;
+using CharacterCardUtility = RimWorld.CharacterCardUtility;
+using GenFilePaths = Verse.GenFilePaths;
+using GraphicDatabaseHeadRecords = Verse.GraphicDatabaseHeadRecords;
+using HediffComp_GetsPermanent = Verse.HediffComp_GetsPermanent;
+using Pawn = Verse.Pawn;
+using PawnBioAndNameGenerator = RimWorld.PawnBioAndNameGenerator;
+using PawnSkinColors = RimWorld.PawnSkinColors;
+using PostLoadIniter = Verse.PostLoadIniter;
+using ScenPart_ForcedHediff = RimWorld.ScenPart_ForcedHediff;
+using ScenPart_StartingAnimal = RimWorld.ScenPart_StartingAnimal;
 
 namespace EdB.PrepareCarefully {
     public class ReflectionCache {
@@ -18,7 +29,7 @@ namespace EdB.PrepareCarefully {
         public MethodInfo PawnBioAndNameGenerator_GetBackstoryCategoryFiltersFor { get; set; }
         public MethodInfo PawnBioAndNameGenerator_IsBioUseable { get; set; }
         public MethodInfo PawnBioAndNameGenerator_TryGetRandomUnusedSolidBioFor { get; set; }
-        public MethodInfo PawnSkinColors_GetSkinDataIndexOfMelanin { get; set; }
+        //public MethodInfo PawnSkinColors_GetSkinDataIndexOfMelanin { get; set; }
         public MethodInfo ScenPart_ForcedHediff_PossibleHediffs { get; set; }
         public MethodInfo ScenPart_StartingAnimal_RandomPets { get; set; }
 
@@ -51,7 +62,7 @@ namespace EdB.PrepareCarefully {
             PawnBioAndNameGenerator_IsBioUseable = ReflectionUtil.RequiredMethod(typeof(PawnBioAndNameGenerator), "IsBioUseable");
             PawnBioAndNameGenerator_BioSelectionWeight = ReflectionUtil.RequiredMethod(typeof(PawnBioAndNameGenerator), "BioSelectionWeight");
 
-            PawnSkinColors_GetSkinDataIndexOfMelanin = ReflectionUtil.RequiredMethod(typeof(PawnSkinColors), "GetSkinDataIndexOfMelanin", new Type[] { typeof(float) });
+            //PawnSkinColors_GetSkinDataIndexOfMelanin = ReflectionUtil.RequiredMethod(typeof(PawnSkinColors), "GetSkinDataIndexOfMelanin", new Type[] { typeof(float) });
             ScenPart_StartingAnimal_RandomPets = ReflectionUtil.RequiredMethod(typeof(ScenPart_StartingAnimal), "RandomPets");
             ScenPart_ForcedHediff_PossibleHediffs = ReflectionUtil.RequiredMethod(typeof(ScenPart_ForcedHediff), "PossibleHediffs");
 

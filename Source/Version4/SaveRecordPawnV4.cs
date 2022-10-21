@@ -62,13 +62,13 @@ namespace EdB.PrepareCarefully {
                 this.adulthood = pawn.Adulthood.identifier;
             }
             else {
-                this.adulthood = pawn.LastSelectedAdulthoodBackstory?.identifier;
+                this.adulthood = pawn.LastSelectedAdulthoodBackstoryDef?.identifier;
             }
             this.childhood = pawn.Childhood.identifier;
             this.skinColor = pawn.Pawn.story.SkinColor;
-            this.melanin = pawn.Pawn.story.melanin;
+            this.melanin = pawn.Pawn.story.GetPrivateField<float>("melanin");
             this.hairDef = pawn.HairDef.defName;
-            this.hairColor = pawn.Pawn.story.hairColor;
+            this.hairColor = pawn.Pawn.story.HairColor;
             this.headGraphicPath = pawn.HeadGraphicPath;
             this.bodyType = pawn.BodyType.defName;
             this.firstName = pawn.FirstName;
@@ -190,8 +190,8 @@ namespace EdB.PrepareCarefully {
             return DefDatabase<HairDef>.GetNamedSilentFail(name);
         }
 
-        public Backstory FindBackstory(string name) {
-            return BackstoryDatabase.allBackstories.Values.ToList().Find((Backstory b) => {
+        public BackstoryDef FindBackstory(string name) {
+            return BackstoryDatabase.allBackstories.Values.ToList().Find((BackstoryDef b) => {
                 return b.identifier.Equals(name);
             });
         }

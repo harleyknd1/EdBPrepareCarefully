@@ -69,44 +69,42 @@ namespace EdB.PrepareCarefully {
              */
 
             return new PawnGenerationRequest(
-                kindDef, // PawnKindDef kind
-                faction, // Faction faction = null
-                context, // PawnGenerationContext context = PawnGenerationContext.NonPlayer
-                -1, //int tile = -1,
-                true, //bool forceGenerateNewPawn = false,
-                false, //bool newborn = false,
-                false, //bool allowDead = false,
-                false, //bool allowDowned = false,
-                false, //bool canGeneratePawnRelations = true,
-                mustBeCapableOfViolence, //bool mustBeCapableOfViolence = false,
-                0f, //float colonistRelationChanceFactor = 1f,
-                false, //bool forceAddFreeWarmLayerIfNeeded = false,
-                true, //bool allowGay = true,
-                false, //bool allowFood = true,
-                false, //bool allowAddictions = true, 
-                false, // bool inhabitant = false
-                false, // bool certainlyBeenInCryptosleep = false
-                false, // bool forceRedressWorldPawnIfFormerColonist = false
-                worldPawnFactionDoesntMatter, // bool worldPawnFactionDoesntMatter = false
-                0f, //float biocodeWeaponChance = 0f, 
-                0f, //float biocodeApparelChance = 0f,
-                null, //Pawn extraPawnForExtraRelationChance = null, 
-                1f, //float relationWithExtraPawnChanceFactor = 1f, 
-                null, // Predicate < Pawn > validatorPreGear = null
-                null, // Predicate < Pawn > validatorPostGear = null
-                Enumerable.Empty<TraitDef>(), //IEnumerable<TraitDef> forcedTraits = null, 
-                Enumerable.Empty<TraitDef>(), //IEnumerable<TraitDef> prohibitedTraits = null,
-                null, // float ? minChanceToRedressWorldPawn = null
-                fixedBiologicalAge, // float ? fixedBiologicalAge = null
-                fixedChronologicalAge, // float ? fixedChronologicalAge = null
-                fixedGender, // Gender ? fixedGender = null
-                null, // float ? fixedMelanin = null
-                null, // string fixedLastName = null
-                null, //string fixedBirthName = null, 
-                null, //RoyalTitleDef fixedTitle = null
-                fixedIdeology, //Ideo fixedIdeo = null
-                false, //bool forceNoIdeo = false
-                false //bool forceNoBackstory = false
+                kind: kindDef, // PawnKindDef kind
+                faction: faction, // Faction faction = null
+                context: context, // PawnGenerationContext context = PawnGenerationContext.NonPlayer
+                tile: -1, //int tile = -1,
+                forceGenerateNewPawn:true, //bool forceGenerateNewPawn = false,
+                allowDead: false, //bool allowDead = false,
+                allowDowned: false, //bool allowDowned = false,
+                canGeneratePawnRelations: false, //bool canGeneratePawnRelations = true,
+                mustBeCapableOfViolence:mustBeCapableOfViolence, //bool mustBeCapableOfViolence = false,
+                colonistRelationChanceFactor:0f, //float colonistRelationChanceFactor = 1f,
+                forceAddFreeWarmLayerIfNeeded:false, //bool forceAddFreeWarmLayerIfNeeded = false,
+                allowGay:true, //bool allowGay = true,
+                allowFood:false, //bool allowFood = true,
+                allowAddictions:false, //bool allowAddictions = true, 
+                inhabitant:false, // bool inhabitant = false
+                certainlyBeenInCryptosleep:false, // bool certainlyBeenInCryptosleep = false
+                forceRedressWorldPawnIfFormerColonist:false, // bool forceRedressWorldPawnIfFormerColonist = false
+                worldPawnFactionDoesntMatter:worldPawnFactionDoesntMatter, // bool worldPawnFactionDoesntMatter = false
+                biocodeWeaponChance:0f, //float biocodeWeaponChance = 0f, 
+                biocodeApparelChance:0f, //float biocodeApparelChance = 0f,
+                extraPawnForExtraRelationChance:null, //Pawn extraPawnForExtraRelationChance = null, 
+                relationWithExtraPawnChanceFactor:1f, //float relationWithExtraPawnChanceFactor = 1f, 
+                validatorPreGear:null, // Predicate < Pawn > validatorPreGear = null
+                validatorPostGear:null, // Predicate < Pawn > validatorPostGear = null
+                forcedTraits:Enumerable.Empty<TraitDef>(), //IEnumerable<TraitDef> forcedTraits = null, 
+                prohibitedTraits:Enumerable.Empty<TraitDef>(), //IEnumerable<TraitDef> prohibitedTraits = null,
+                minChanceToRedressWorldPawn:null, // float ? minChanceToRedressWorldPawn = null
+                fixedBiologicalAge:fixedBiologicalAge, // float ? fixedBiologicalAge = null
+                fixedChronologicalAge:fixedChronologicalAge, // float ? fixedChronologicalAge = null
+                fixedGender:fixedGender, // Gender ? fixedGender = null
+                fixedLastName:null, // string fixedLastName = null
+                fixedBirthName:null, //string fixedBirthName = null, 
+                fixedTitle:null, //RoyalTitleDef fixedTitle = null
+                fixedIdeo:fixedIdeology, //Ideo fixedIdeo = null
+                forceNoIdeo:false, //bool forceNoIdeo = false
+                forceNoBackstory:false //bool forceNoBackstory = false
             ) {
                 ForbidAnyTitle = true
             };
